@@ -41,12 +41,13 @@ class LinearRegression:
             else:
                 predictions = np.dot(self.X, self.W) + self.bias
 
+            assert predictions.shape == self.y.shape
             grad_w = np.dot(self.X.T, (predictions - self.y))
             self.W = self.W - (self.lr / self.m) * grad_w
             if self.bias is not None:
                 grad_b = np.sum(predictions - self.y)
                 self.bias = self.bias - (self.lr / self.m) * grad_b
-
+            assert self.W.shape == grad_w.shape
             loss = (1 / (2 * self.m)) * np.sum(np.square(predictions - self.y))
             cost_hist[num_epoch] = loss
             print(f'Epoch : {num_epoch+1}/{self.epochs} \t Loss : {loss}')
